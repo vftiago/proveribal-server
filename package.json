@@ -1,0 +1,19 @@
+{
+	"name": "proverbial-server",
+	"version": "1.0.0",
+	"description": "your proverbial server",
+	"main": "index.js",
+	"scripts": {
+		"tsc": "tsc"
+	},
+	"repository": "https://github.com/vftiago/proverbial-server.git",
+	"author": "Tiago Fernandes <vf.tiago@gmail.com>",
+	"license": "MIT",
+	"private": false,
+	"devDependencies": {
+		"typescript": "^2.8.1"
+	},
+	"dependencies": {
+		"mongodb": "^3.0.5"
+	}
+}
