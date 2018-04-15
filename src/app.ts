@@ -8,7 +8,7 @@ const port = 5000;
 connect("mongodb://localhost/proverbial", err => {
     if (err) throw err;
     app.emit("ready");
-    console.log("Connected to Database");
+    console.log(`Connected to Database at ${new Date().getMinutes()}`);
 });
 
 app.get("/api/proverbs", async (req, res) => {
@@ -16,8 +16,11 @@ app.get("/api/proverbs", async (req, res) => {
     res.send(proverbs);
 });
 
-app.on("ready", function() {
-    app.listen(port, () => {
-        console.log(`Listening on port ${port}`);
-    });
+app.get("/api/proverbs/:id", async (req, res) => {
+    const proverbs = await Proverb.findById(req.params.id);
+    res.send(proverbs);
 });
+
+app.on("ready", () =>
+    app.listen(port, () => console.log(`Listening on port ${port}`))
+);
