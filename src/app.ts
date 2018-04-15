@@ -1,9 +1,16 @@
 import { connect } from "mongoose";
 import * as express from "express";
+import * as cors from "cors";
 import Proverb from "./models/proverb";
 
-const app = express();
 const port = 5000;
+const app = express();
+const counts = {};
+app.use(
+    cors({
+        origin: "http://localhost:3000"
+    })
+);
 
 connect("mongodb://localhost/proverbial", err => {
     if (err) throw err;
@@ -11,14 +18,20 @@ connect("mongodb://localhost/proverbial", err => {
     console.log(`Connected to Database at ${new Date().getMinutes()}`);
 });
 
+app.get("/api/counts", async (req, res) => {
+    const count = counts[req.query.lang] || (await Proverb.count(req.query));
+    counts[req.query.lang] = count;
+    res.json(count);
+});
+
 app.get("/api/proverbs", async (req, res) => {
-    const proverbs = await Proverb.find();
-    res.send(proverbs);
+    const proverbs = await Proverb.find({ lang: req.query.lang });
+    res.json(proverbs);
 });
 
 app.get("/api/proverbs/:id", async (req, res) => {
     const proverbs = await Proverb.findById(req.params.id);
-    res.send(proverbs);
+    res.json(proverbs);
 });
 
 app.on("ready", () =>
