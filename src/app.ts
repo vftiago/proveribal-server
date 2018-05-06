@@ -39,8 +39,18 @@ app.get("/api/proverbs/random", async (req, res) => {
 });
 
 app.get("/api/proverbs/:id", async (req, res) => {
-    const proverbs = await Proverb.findById(req.params.id);
-    res.json(proverbs);
+    const proverb = await Proverb.findById(req.params.id);
+    res.json([proverb]);
+});
+
+app.get("/api/users/login", async (req, res) => {
+    const proverb = await Proverb.findById(req.params.id);
+    res.json([proverb]);
+});
+
+app.get("/api/users/register", async (req, res) => {
+    const proverb = await Proverb.findById(req.params.id);
+    res.json([proverb]);
 });
 
 app.on("ready", () =>

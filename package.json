@@ -3,6 +3,8 @@
     "version": "0.0.1",
     "description": "your proverbial server",
     "scripts": {
+        "postinstall": "tsc",
+        "start": "node dist/app.js",
         "tsc": "tsc --watch"
     },
     "author": "Tiago Fernandes <vf.tiago@gmail.com>",
