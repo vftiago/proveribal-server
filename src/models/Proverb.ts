@@ -7,4 +7,4 @@ const proverbSchema = new Schema({
     text: String
 });
 
-export default mongoose.model("Proverb", proverbSchema);
+export default mongoose.model("proverbs", proverbSchema);
