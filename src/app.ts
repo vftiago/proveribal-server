@@ -3,14 +3,20 @@ import { connect } from "mongoose";
 import * as express from "express";
 import * as cors from "cors";
 import Proverb from "./models/proverb";
+import auth from "./routes/auth";
+import * as passport from "passport";
+import googlePassport from "./config/passport";
 
 config(); // retrieve .env file
+googlePassport(passport);
 
 const env = process.env;
 const port = env.APP_PORT || 5000;
 const mongoURI = `mongodb://${env.DB_USER}:${env.DB_PASS}@${env.DB_HOST}:${
     env.DB_PORT
 }/${env.DB_NAME}`;
+
+// load routes
 
 const app = express();
 const counts = {};
@@ -20,6 +26,8 @@ app.use(
         origin: "http://localhost:3000"
     })
 );
+
+app.use("/auth", auth);
 
 connect(mongoURI, err => {
     if (err) throw err;
