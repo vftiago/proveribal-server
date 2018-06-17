@@ -25,16 +25,20 @@ app.use(
     })
 );
 
+// use routes
 app.use("/auth", auth);
 
 // mongoose connect
-connect(mongoURI, err => {
-    if (err) throw err;
-    app.emit("ready");
-    console.log(
-        `Connected to Database at ${new Date().getHours()}:${new Date().getMinutes()}`
-    );
-});
+connect(
+    mongoURI,
+    err => {
+        if (err) throw err;
+        app.emit("ready");
+        console.log(
+            `Connected to Database at ${new Date().getHours()}:${new Date().getMinutes()}`
+        );
+    }
+);
 
 app.get("/api/counts", async (req, res) => {
     const count = counts[req.query.lang] || (await Proverb.count(req.query));

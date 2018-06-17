@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import User from "../models/User";
 
 config();
+
 const env = process.env;
 
 const GooglePassportStrategy = googlePassport.Strategy;
