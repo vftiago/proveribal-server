@@ -25,6 +25,8 @@ app.use(
     })
 );
 
+app.use(passport.initialize());
+
 // use routes
 app.use("/auth", auth);
 

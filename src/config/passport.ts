@@ -19,7 +19,7 @@ export default passport => {
             },
             async (accessToken, refreshToken, profile, done) => {
                 console.log(accessToken);
-                console.log(profile);
+                console.log(profile.displayName);
                 const photoURL = profile.photos[0].value;
                 const imageURL = photoURL.substring(0, photoURL.indexOf("?"));
                 const newUser = {
