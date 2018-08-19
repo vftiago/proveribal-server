@@ -5,14 +5,14 @@ const router = express.Router();
 
 router.get(
     "/google",
-    passport.authenticate("google", { scope: ["profile", "email"] })
+    passport.authenticate("google", { scope: ["profile", "email"], session: false })
 );
 
 router.get(
     "/google/callback",
-    passport.authenticate("google", { failureRedirect: "/" }),
+    passport.authenticate("google", { failureRedirect: "/", session: false }),
     (req, res) => {
-        res.redirect("https://localhost:3000");
+        res.redirect("http://localhost:3000");
     }
 );
 
