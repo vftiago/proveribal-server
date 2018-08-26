@@ -1,5 +1,10 @@
 import * as express from "express";
 import * as passport from "passport";
+import { config } from "dotenv";
+
+config(); // retrieve .env file
+
+const env = process.env;
 
 const router = express.Router();
 
@@ -14,21 +19,25 @@ router.get(
 router.get(
     "/google/callback",
     passport.authenticate("google", {
-        failureRedirect: "http://localhost:3000",
+        failureRedirect: env.ORIGIN,
         session: false
     }),
     (req, res) => {
-        req.login(req.user, () => res.redirect("http://localhost:3000"));
+        req.login(req.user, () => res.redirect(env.ORIGIN));
     }
 );
 
 router.get("/verify", (req, res) => {
-    console.log(req.user);
     if (req.user) {
-        console.log(req.user);
+        console.log("verify", req.user);
     } else {
         console.log("Not authenticated.");
     }
+});
+
+router.get("/logout", (req, res) => {
+    req.logout();
+    res.redirect(env.ORIGIN);
 });
 
 export default router;

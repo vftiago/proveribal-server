@@ -12,8 +12,9 @@ import googlePassportStrategy from "./config/passport";
 
 config(); // retrieve .env file
 
-const counts = {};
 const env = process.env;
+
+const counts = {};
 const mongoURI = `mongodb://${env.DB_USER}:${env.DB_PASS}@${env.DB_HOST}:${
     env.DB_PORT
 }/${env.DB_NAME}`;
@@ -23,7 +24,7 @@ const app = express();
 // app middleware
 app.use(
     cors({
-        origin: "http://localhost:3000"
+        origin: env.ORIGIN
     })
 );
 app.use(cookieParser());

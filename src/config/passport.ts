@@ -2,7 +2,7 @@ import * as googlePassport from "passport-google-oauth20";
 import { config } from "dotenv";
 import User from "../models/User";
 
-config();
+config(); // retrieve .env file
 
 const env = process.env;
 
@@ -39,13 +39,11 @@ export default passport => {
     );
 
     passport.serializeUser((user, done) => {
-        console.log("serialize", user);
         done(null, user.id);
     });
 
     passport.deserializeUser(async (id, done) => {
         const user = await User.findById(id);
-        console.log("deserialize", user);
         done(null, user);
     });
 };
