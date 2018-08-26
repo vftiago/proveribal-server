@@ -3,13 +3,14 @@ import User from "./models/User";
 import { config } from "dotenv";
 import { connect } from "mongoose";
 import * as express from "express";
+import * as expressSession from "express-session";
+import * as cookieParser from "cookie-parser";
 import * as cors from "cors";
-import auth from "./routes/auth";
 import * as passport from "passport";
+import auth from "./routes/auth";
 import googlePassportStrategy from "./config/passport";
 
 config(); // retrieve .env file
-googlePassportStrategy(passport);
 
 const counts = {};
 const env = process.env;
@@ -19,13 +20,24 @@ const mongoURI = `mongodb://${env.DB_USER}:${env.DB_PASS}@${env.DB_HOST}:${
 
 const app = express();
 
+// app middleware
 app.use(
     cors({
         origin: "http://localhost:3000"
     })
 );
-
+app.use(cookieParser());
+app.use(
+    expressSession({
+        secret: "secret",
+        resave: false,
+        saveUninitialized: false
+    })
+);
 app.use(passport.initialize());
+app.use(passport.session());
+
+googlePassportStrategy(passport);
 
 // use routes
 app.use("/auth", auth);

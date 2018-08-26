@@ -18,25 +18,34 @@ export default passport => {
                 proxy: true
             },
             async (accessToken, refreshToken, profile, done) => {
-                console.log(accessToken);
-                console.log(profile.displayName);
                 const photoURL = profile.photos[0].value;
                 const imageURL = photoURL.substring(0, photoURL.indexOf("?"));
-                const newUser = {
-                    googleID: profile.id,
-                    firstName: profile.name.givenName,
-                    lastName: profile.name.familyName,
-                    email: profile.emails[0].value,
-                    imageURL
-                };
 
                 const user =
                     (await User.findOne({
                         googleID: profile.id
-                    })) || (await new User(newUser).save());
+                    })) ||
+                    (await new User({
+                        googleID: profile.id,
+                        firstName: profile.name.givenName,
+                        lastName: profile.name.familyName,
+                        email: profile.emails[0].value,
+                        imageURL
+                    }).save());
 
-                done(null, user);
+                return done(null, user);
             }
         )
     );
+
+    passport.serializeUser((user, done) => {
+        console.log("serialize", user);
+        done(null, user.id);
+    });
+
+    passport.deserializeUser(async (id, done) => {
+        const user = await User.findById(id);
+        console.log("deserialize", user);
+        done(null, user);
+    });
 };
