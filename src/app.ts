@@ -30,7 +30,7 @@ app.use(
 app.use(cookieParser());
 app.use(
     expressSession({
-        secret: "secret",
+        secret: "proverbial-secret",
         resave: false,
         saveUninitialized: false
     })
