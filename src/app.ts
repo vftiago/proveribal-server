@@ -34,7 +34,11 @@ app.use(
     expressSession({
         resave: false,
         secret: "proverbial-secret",
-        store: new MongoStore(),
+        store: new MongoStore({
+            host: env.DB_HOST,
+            port: env.DB_PORT,
+            url: mongoURI
+        }),
         saveUninitialized: false
     })
 );
