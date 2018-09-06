@@ -4,7 +4,7 @@ import { config } from "dotenv";
 import { connect } from "mongoose";
 import * as express from "express";
 import * as expressSession from "express-session";
-import * as MongoStore from "connect-mongo";
+import * as connectMongo from "connect-mongo";
 import * as cookieParser from "cookie-parser";
 import * as cors from "cors";
 import * as passport from "passport";
@@ -21,6 +21,7 @@ const mongoURI = `mongodb://${env.DB_USER}:${env.DB_PASS}@${env.DB_HOST}:${
 }/${env.DB_NAME}`;
 
 const app = express();
+const MongoStore = connectMongo(expressSession);
 
 // app middleware
 app.use(
