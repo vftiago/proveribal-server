@@ -97,7 +97,5 @@ app.get("/api/users/register", async (req, res) => {
 });
 
 app.on("ready", () =>
-    app.listen(env.APP_PORT, () =>
-        console.log(`Listening on port ${env.APP_PORT}`)
-    )
+    app.listen(env.PORT, () => console.log(`Listening on port ${env.PORT}`))
 );
