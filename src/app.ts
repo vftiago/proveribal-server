@@ -4,6 +4,7 @@ import { config } from "dotenv";
 import { connect } from "mongoose";
 import * as express from "express";
 import * as expressSession from "express-session";
+import * as MongoStore from "connect-mongo";
 import * as cookieParser from "cookie-parser";
 import * as cors from "cors";
 import * as passport from "passport";
@@ -30,8 +31,9 @@ app.use(
 app.use(cookieParser());
 app.use(
     expressSession({
-        secret: "proverbial-secret",
         resave: false,
+        secret: "proverbial-secret",
+        store: new MongoStore(),
         saveUninitialized: false
     })
 );

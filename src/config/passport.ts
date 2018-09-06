@@ -8,6 +8,8 @@ const env = process.env;
 
 const GooglePassportStrategy = googlePassport.Strategy;
 
+console.log(env);
+
 export default passport => {
     passport.use(
         new GooglePassportStrategy(
