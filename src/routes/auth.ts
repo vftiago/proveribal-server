@@ -23,6 +23,10 @@ router.get(
         session: false
     }),
     (req, res) => {
+        console.log(
+            "wooo we authenticated, here is our user object:",
+            req.user
+        );
         req.login(req.user, () => res.redirect(env.ORIGIN));
     }
 );
