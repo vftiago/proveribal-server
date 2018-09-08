@@ -11,29 +11,24 @@ const router = express.Router();
 router.get(
     "/google",
     passport.authenticate("google", {
-        scope: ["profile", "email"],
-        session: false
+        scope: ["profile", "email"]
     })
 );
 
 router.get(
     "/google/callback",
     passport.authenticate("google", {
-        failureRedirect: env.ORIGIN,
-        session: false
+        failureRedirect: env.ORIGIN
     }),
     (req, res) => {
-        console.log(
-            "wooo we authenticated, here is our user object:",
-            req.user
-        );
         req.login(req.user, () => res.redirect(env.ORIGIN));
     }
 );
 
 router.get("/verify", (req, res) => {
     if (req.user) {
-        console.log("verify", req.user);
+        console.log("Verify:");
+        console.log(req.user);
     } else {
         console.log("Not authenticated.");
     }
