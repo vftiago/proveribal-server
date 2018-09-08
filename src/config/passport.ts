@@ -29,6 +29,7 @@ export default passport => {
                         googleID: profile.id,
                         firstName: profile.name.givenName,
                         lastName: profile.name.familyName,
+                        username: profile.emails[0].value,
                         email: profile.emails[0].value,
                         imageURL
                     }).save());
