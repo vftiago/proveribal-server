@@ -11,14 +11,16 @@ const router = express.Router();
 router.get(
     "/google",
     passport.authenticate("google", {
-        scope: ["profile", "email"]
+        scope: ["profile", "email"],
+        session: false
     })
 );
 
 router.get(
     "/google/callback",
     passport.authenticate("google", {
-        failureRedirect: env.ORIGIN
+        failureRedirect: env.ORIGIN,
+        session: false
     }),
     (req, res) => {
         res.redirect(`${env.ORIGIN}?token=${req.token}`);
