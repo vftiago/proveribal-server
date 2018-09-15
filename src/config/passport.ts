@@ -47,12 +47,12 @@ export default passport => {
         )
     );
 
-    passport.serializeUser((user, done) => {
-        done(null, user.id);
-    });
+    // passport.serializeUser((user, done) => {
+    //     done(null, user.id);
+    // });
 
-    passport.deserializeUser(async (id, done) => {
-        const user = await User.findById(id);
-        done(null, user);
-    });
+    // passport.deserializeUser(async (id, done) => {
+    //     const user = await User.findById(id);
+    //     done(null, user);
+    // });
 };

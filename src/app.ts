@@ -1,11 +1,11 @@
 import Proverb from "./models/Proverb";
-import User from "./models/User";
+// import User from "./models/User";
 import { config } from "dotenv";
 import { connect } from "mongoose";
 import * as express from "express";
-import * as expressSession from "express-session";
-import * as connectMongo from "connect-mongo";
-import * as cookieParser from "cookie-parser";
+// import * as expressSession from "express-session";
+// import * as connectMongo from "connect-mongo";
+// import * as cookieParser from "cookie-parser";
 import * as cors from "cors";
 import * as passport from "passport";
 import auth from "./routes/auth";
@@ -21,7 +21,7 @@ const mongoURI = `mongodb://${env.DB_USER}:${env.DB_PASS}@${env.DB_HOST}:${
 }/${env.DB_NAME}`;
 
 const app = express();
-const MongoStore = connectMongo(expressSession);
+// const MongoStore = connectMongo(expressSession);
 
 // app middleware
 app.use(
@@ -29,21 +29,21 @@ app.use(
         origin: env.ORIGIN
     })
 );
-app.use(cookieParser());
-app.use(
-    expressSession({
-        resave: false,
-        secret: "proverbial-secret",
-        store: new MongoStore({
-            host: env.DB_HOST,
-            port: env.DB_PORT,
-            url: mongoURI
-        }),
-        saveUninitialized: false
-    })
-);
+// app.use(cookieParser());
+// app.use(
+//     expressSession({
+//         resave: false,
+//         secret: "proverbial-secret",
+//         store: new MongoStore({
+//             host: env.DB_HOST,
+//             port: env.DB_PORT,
+//             url: mongoURI
+//         }),
+//         saveUninitialized: false
+//     })
+// );
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 googlePassportStrategy(passport);
 
