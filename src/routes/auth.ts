@@ -21,14 +21,14 @@ router.get(
         failureRedirect: env.ORIGIN
     }),
     (req, res) => {
-        req.login(req.user, () => res.redirect(env.ORIGIN));
+        res.redirect(`${env.ORIGIN}?token=${req.token}`);
     }
 );
 
 router.get("/verify", (req, res) => {
-    if (req.user) {
+    if (req.token) {
         console.log("Verify:");
-        console.log(req.user);
+        console.log(req.token);
     } else {
         console.log("Not authenticated.");
     }

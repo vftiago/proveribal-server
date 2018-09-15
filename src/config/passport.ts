@@ -1,4 +1,5 @@
 import * as googlePassport from "passport-google-oauth20";
+import * as jwt from "jsonwebtoken";
 import { config } from "dotenv";
 import User from "../models/User";
 
@@ -17,9 +18,16 @@ export default passport => {
                 callbackURL: "/auth/google/callback",
                 proxy: true
             },
-            async (accessToken, refreshToken, profile, done) => {
+            async (_accessToken, _refreshToken, profile, done) => {
                 const photoURL = profile.photos[0].value;
                 const imageURL = photoURL.substring(0, photoURL.indexOf("?"));
+                const token = jwt.sign(
+                    {
+                        googleID: profile.id
+                    },
+                    "proverbial-secret",
+                    { expiresIn: "1h" }
+                );
 
                 const user =
                     (await User.findOne({
@@ -34,7 +42,7 @@ export default passport => {
                         imageURL
                     }).save());
 
-                return done(null, user);
+                return done(null, token);
             }
         )
     );
