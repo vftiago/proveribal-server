@@ -42,6 +42,8 @@ export default passport => {
                         imageURL
                     }).save());
 
+                console.log(token);
+
                 return done(null, token);
             }
         )

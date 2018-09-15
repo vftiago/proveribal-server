@@ -23,7 +23,8 @@ router.get(
         session: false
     }),
     (req, res) => {
-        res.redirect(`${env.ORIGIN}?token=${req.token}`);
+        console.log(req);
+        res.redirect(`${env.ORIGIN}?token=${req.user.token}`);
     }
 );
 
