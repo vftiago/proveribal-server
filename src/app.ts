@@ -1,15 +1,8 @@
 import Proverb from "./models/Proverb";
-// import User from "./models/User";
 import { config } from "dotenv";
 import { connect } from "mongoose";
 import * as express from "express";
-// import * as expressSession from "express-session";
-// import * as connectMongo from "connect-mongo";
-// import * as cookieParser from "cookie-parser";
 import * as cors from "cors";
-import * as passport from "passport";
-import auth from "./routes/auth";
-import googlePassportStrategy from "./config/passport";
 
 config(); // retrieve .env file
 
@@ -21,7 +14,6 @@ const mongoURI = `mongodb://${env.DB_USER}:${env.DB_PASS}@${env.DB_HOST}:${
 }/${env.DB_NAME}`;
 
 const app = express();
-// const MongoStore = connectMongo(expressSession);
 
 // app middleware
 app.use(
@@ -29,26 +21,9 @@ app.use(
         origin: env.ORIGIN
     })
 );
-// app.use(cookieParser());
-// app.use(
-//     expressSession({
-//         resave: false,
-//         secret: "proverbial-secret",
-//         store: new MongoStore({
-//             host: env.DB_HOST,
-//             port: env.DB_PORT,
-//             url: mongoURI
-//         }),
-//         saveUninitialized: false
-//     })
-// );
-app.use(passport.initialize());
-// app.use(passport.session());
-
-googlePassportStrategy(passport);
 
 // use routes
-app.use("/auth", auth);
+// app.use("/auth", auth);
 
 // mongoose connect
 connect(
@@ -82,16 +57,6 @@ app.get("/api/proverbs/random", async (req, res) => {
 });
 
 app.get("/api/proverbs/:id", async (req, res) => {
-    const proverb = await Proverb.findById(req.params.id);
-    res.json([proverb]);
-});
-
-app.get("/api/users/login", async (req, res) => {
-    const proverb = await Proverb.findById(req.params.id);
-    res.json([proverb]);
-});
-
-app.get("/api/users/register", async (req, res) => {
     const proverb = await Proverb.findById(req.params.id);
     res.json([proverb]);
 });
