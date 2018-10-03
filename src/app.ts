@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import { connect } from "mongoose";
 import * as express from "express";
 import * as cors from "cors";
+import auth from "./routes/auth";
 
 config(); // retrieve .env file
 
@@ -18,12 +19,13 @@ const app = express();
 // app middleware
 app.use(
     cors({
-        origin: env.ORIGIN
+        origin: env.ORIGIN.toString()
     })
 );
+app.use(express.json());
 
 // use routes
-// app.use("/auth", auth);
+app.use("/api/auth", auth);
 
 // mongoose connect
 connect(
