@@ -1,32 +1,26 @@
 import * as express from "express";
-import { config } from "dotenv";
 import User from "../models/User";
-import { OAuth2Client } from "google-auth-library";
-
-config(); // retrieve .env file
-
-const env = process.env;
-
-const { CLIENT_ID } = env;
+import verifyIdToken from "../utils/verifyIdToken";
+import { ObjectId } from "mongodb";
 
 const router = express.Router();
 
 router.post("/user", async (req, res) => {
-    const token = req.body.data;
+    const idToken = req.body.data;
+
+    const tokenPayload = await verifyIdToken(idToken);
+
+    const userId = parseInt(tokenPayload["sub"], 10);
+
+    if (!ObjectId.isValid(userId)) {
+        throw new Error("Invalid ObjectId generated");
+    }
+
     try {
-        const tokenPayload = await verify(token).catch(console.error);
-        if (!tokenPayload) {
-            throw new Error("client.verifyIdToken returned void");
-        }
-
-        console.log(tokenPayload);
-
         const user =
-            (await User.findOne({
-                googleID: tokenPayload["sub"]
-            })) ||
+            (await User.findOne({ _id: userId })) ||
             (await new User({
-                googleID: tokenPayload["sub"],
+                _id: userId,
                 firstName: tokenPayload["given_name"],
                 lastName: tokenPayload["family_name"],
                 username: tokenPayload["email"],
@@ -41,13 +35,3 @@ router.post("/user", async (req, res) => {
 });
 
 export default router;
-
-const client = new OAuth2Client(CLIENT_ID);
-
-async function verify(token) {
-    const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: CLIENT_ID
-    });
-    return ticket.getPayload();
-}

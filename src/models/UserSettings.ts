@@ -1,15 +1,14 @@
 import { model, Schema } from "mongoose";
 
-const proverbSchema = new Schema({
-    lang: {
+const userSettingsSchema = new Schema({
+    userId: {
         type: String,
         required: true
     },
-    text: {
+    selectedLanguageId: {
         type: String,
         required: true
-    },
-    color: String
+    }
 });
 
-export default model("proverbs", proverbSchema);
+export default model("userSettings", userSettingsSchema);
