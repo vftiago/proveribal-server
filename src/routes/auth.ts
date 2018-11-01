@@ -21,7 +21,10 @@ router.post("/user", async (req, res) => {
     try {
         let user;
 
-        user = await User.findOne({ _id: userId }).populate("languages");
+        user = await User.findOne({ _id: userId }).populate({
+            path: "settings.selectedLanguages",
+            model: "language"
+        });
 
         if (!user) {
             const newUser = {
