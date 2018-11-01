@@ -1,7 +1,9 @@
 import * as express from "express";
 import User from "../models/User";
+import Language from "../models/Language";
 import verifyIdToken from "../utils/verifyIdToken";
 import { ObjectId } from "mongodb";
+import appDefaults from "../appDefaults";
 
 const router = express.Router();
 
@@ -17,16 +19,31 @@ router.post("/user", async (req, res) => {
     }
 
     try {
-        const user =
-            (await User.findOne({ _id: userId })) ||
-            (await new User({
+        let user;
+
+        user = await User.findOne({ _id: userId }).populate("languages");
+
+        if (!user) {
+            const newUser = {
                 _id: userId,
                 firstName: tokenPayload["given_name"],
                 lastName: tokenPayload["family_name"],
                 username: tokenPayload["email"],
                 email: tokenPayload["email"],
-                imageURL: tokenPayload["picture"]
-            }).save());
+                imageURL: tokenPayload["picture"],
+                settings: {
+                    selectedLanguages: []
+                }
+            };
+
+            const defaultLanguage = await Language.findOne({
+                _id: appDefaults.userSettings.selectedLanguageId
+            });
+
+            newUser.settings.selectedLanguages.push(defaultLanguage);
+
+            user = await new User(newUser).save();
+        }
 
         res.json(user);
     } catch (e) {

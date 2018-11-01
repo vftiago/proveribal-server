@@ -16,7 +16,15 @@ const userSchema = new Schema(
         },
         firstName: String,
         lastName: String,
-        imageURL: String
+        imageURL: String,
+        settings: {
+            selectedLanguages: [
+                {
+                    type: Schema.Types.ObjectId,
+                    ref: "language"
+                }
+            ]
+        }
     },
     { _id: false }
 );

@@ -1,6 +1,6 @@
 const appDefaults = {
     userSettings: {
-        selectedLanguageId: "english"
+        selectedLanguageId: "en"
     }
 };
 

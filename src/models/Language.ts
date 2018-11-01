@@ -1,10 +1,17 @@
 import { model, Schema } from "mongoose";
 
-const languageSchema = new Schema({
-    label: {
-        type: String,
-        required: true
-    }
-});
+const languageSchema = new Schema(
+    {
+        _id: {
+            type: String,
+            required: true
+        },
+        label: {
+            type: String,
+            required: true
+        }
+    },
+    { _id: false }
+);
 
-export default model("languages", languageSchema);
+export default model("language", languageSchema);
