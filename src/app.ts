@@ -2,8 +2,11 @@ import { config } from "dotenv";
 import { connect } from "mongoose";
 import * as express from "express";
 import * as cors from "cors";
+
+// routes
 import auth from "./routes/auth";
 import proverbs from "./routes/proverbs";
+import languages from "./routes/languages";
 
 config(); // retrieve .env file
 
@@ -41,6 +44,8 @@ app.use(express.json());
 app.use("/api/auth", auth);
 
 app.use("/api/proverbs", proverbs);
+
+app.use("/api/languages", languages);
 
 // app ready
 app.on("ready", () =>
