@@ -36,7 +36,8 @@ router.post("/user", async (req, res) => {
                 imageURL: tokenPayload["picture"],
                 settings: {
                     selectedLanguages: []
-                }
+                },
+                favorites: []
             };
 
             const defaultLanguage = await Language.findOne({
