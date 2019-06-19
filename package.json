@@ -7,7 +7,7 @@
     "lint-staged": "lint-staged",
     "postinstall": "tsc",
     "start": "nodemon dist/app.js",
-    "tsc": "tsc --watch"
+    "tsc": "tsc"
   },
   "author": "Tiago Fernandes <vf.tiago@gmail.com>",
   "license": "MIT",
