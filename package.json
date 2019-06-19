@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "your proverbial server",
   "scripts": {
+    "format": "prettier --write './src/**/*.{js,jsx,ts,tsx,yml,css,sass,json,md}'",
     "lint-staged": "lint-staged",
     "postinstall": "tsc",
     "start": "nodemon dist/app.js",

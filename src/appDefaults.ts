@@ -1,10 +1,10 @@
 const appDefaults = {
-    availableSettings: {
-        languages: []
-    },
-    userSettings: {
-        selectedLanguageId: "en"
-    }
+  availableSettings: {
+    languages: []
+  },
+  userSettings: {
+    selectedLanguageId: "en"
+  }
 };
 
 export default appDefaults;
