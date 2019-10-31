@@ -29,7 +29,7 @@
     "express": "^4.17.1",
     "google-auth-library": "^4.2.0",
     "mongodb": "^3.2.7",
-    "mongoose": "^5.5.14",
+    "mongoose": "^5.7.5",
     "nodemon": "^1.19.1"
   },
   "lint-staged": {
